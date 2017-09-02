@@ -48,8 +48,10 @@ Pode-se dividir o objetivo em duas partes:
 #### 1. Realização da comparação do tamanho dos termos originais com os termos compactados
 
 Para conduzir o estudo a seguinte fórmula foi utilizada:
+
 ![eq1](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/eq1.png)
-onde R representa a redução do tamanho, T representa o tamnho do termo 
+
+onde R representa a redução do tamanho, T representa o tamnho do termo.
 
 Essa fórmula representa a porcentagem de ganho do termo compactado para com o termo original. O programa realiza a coleta de dados à medida que ele é executado, e esses dados são utilizados para o emprego da fórmula acima. Esses dados são os seguintes:
 
@@ -65,7 +67,57 @@ Com esses dados é possível calcular a média. Ao final a seguinte tabela (Tabe
 Podem-se fazer comparações com a tabela retirada do artigo (Tabela 2). Nota-se que o total de palavras nos documentos e o de palavras indexadas possuem uma pequena variação. Por esse motivo há mudanças no tamanho médio das palavras e também na porcentagem da redução do tamanho. Outra comparação é o fato da utilização de apenas 2 dos 3 documentos do caso de estudo do artigo e também o acréscimo de outros 3 realizados nesse trabalho.
 
 ![tab2](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/tabela2.png)
+
 #### 2. Realização da comparação do número de comparações para processar a query
 
+Para conduzir o estudo a seguinte fórmula foi utilizada:
 
+![eq2](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/eq2.png)
 
+onde C representa número de comparações, Q representa o número de comprações para processar a query.
+
+Essa fórmula representa a eficiência do sistema, sendo que é calculado a porcentagem da redução do número de comparações necessárias para processar cada termo na query. O programa realiza a coleta de dados à medida que ele é executado, e esses dados são utilizados para o emprego da fórmula acima. Esses dados são os seguintes:
+
+a)	Número de comparações necessárias para processar a query original.
+b)	Número de comparações necessárias para processar a query compactada.
+
+Dois algoritmos de pesquisa foram implementados para realizar a pesquisa no vocabulário, tanto no original quanto no compactado. O primeiro algoritmo é o de pesquisa sequencial. O segundo algoritmo é o de pesquisa binária. 
+
+A Tabela 3 mostra a porcentagem de ganho.
+
+![tab3](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/tabela3.png)
+
+A comparação é realizada caractere por caractere, isto é, foi contabilizada essas comparações. Para a query compactada as comparações são feita de acordo com a representação do número, expresso em inteiro, e cada comparação é contabilizada como sendo uma. A tabela 4, retirada do artigo, é utilizada para fazer as devidas observações.
+
+![tab4](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/tabela4.png)
+
+## Estudo de caso
+
+O estudo de caso foi realizado em cima de um pequeno trecho de texto. Esse texto, por motivos de comparação, é o mesmo utilizado no artigo.
+
+``` 
+Access Code
+Unique combination of characters used as identification for gaining access to a remote computer. The access code is generally referred to as user ID & password.
+```
+
+Esse pequeno trecho possui 26 palavras, sendo que, 21 são indexadas pelo fato de a indexação ocorrer apenas em palavras acima de tamanho 1. A Tabela 5 mostra cada palavra com sua representação de compactação e também o número em bytes gastos para cada palavra, tanto ela original tanto ela compactada. A tabela está ordenada de forma crescente de acordo com o número de bytes necessários para representar a palavra original.
+
+![tab5](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/tabela5.png)
+
+Obs: os resultados alcançados nessa tabela são os mesmos contidos no artigo.
+
+Para efeitos de melhor visualização o Gráfico 1 mostra as curvas de ganhos com a compactação dos termos.
+
+![graf1](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/grafico1.png)
+
+Para o número de comparações necessárias para processar a consulta, que indica eficiência, foram realizados dois gráficos. O Gráfico 2 representa a realização do processamento da consulta utilizando o algoritmo de pesquisa sequencial. O Gráfico 3 representa o processamento da consulta utilizando o algoritmo de pesquisa binária. 
+
+![graf2](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/grafico2.png)
+
+![graf3](https://github.com/RodolfoHerman/recuperacao-de-informacao-indice-invertido-compactado-com-huffman/blob/master/img_README/grafico3.png)
+
+Nota-se que em alguns momentos a pesquisa sequencial para as palavras originais são melhores do que as palavras compactadas, isso se dá pelo fato de que as palavras compactadas estão ordenadas de forma ascendente de acordo com a representação em inteiro, isto é, palavras com menor tamanho estão nas primeiras posições. Por exemplo, a palavra “characters” no vocabulário original é uma das primeiras palavras, pois começa com a letra ‘c’, já no vocabulário compactado é uma das ultimas, pois ao compacta-la torna-se um número inteiro muito grande, devido ao seu tamanho. Nota-se o ganho utilizando a pesquisa binária, em média ocorrem 4 comparações para processar a consulta.
+
+## Conclusão
+
+O estudo mostra uma redução de 40% no tamanho dos termos no vocabulário contribuindo para a sua redução de tamanho. Ajudando, caso seja necessário, na transferência do vocabulário para outra unidade de armazenamento, ou ainda, seu carregamento na memória, já que os termos compactados reduzem o número de símbolos que representam cada termo. Essa redução de tamanho contribuiu para a redução do número de comparações necessárias para processar cada consulta, diminuindo-se o tempo gasta pelo processador de consultas. O número de comparações para processar a consulta foi reduzido em 36% no estudo realizado pelo artigo, já para o meu estudo a redução foi em média de 60%, essa diferença foi pelo fato de que em meu estudo realizei a comparação dos termos compactados como se fossem números inteiros.
